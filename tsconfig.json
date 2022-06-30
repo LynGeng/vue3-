@@ -33,7 +33,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/customApi/reactive.js"  ],
   "exclude": [
     "node_modules"
   ]

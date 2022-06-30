@@ -1,8 +1,21 @@
+<!--
+ * @Author       : lg
+ * @Date         : 2022-06-29 11:00:00
+ * @LastEditors  : lg
+ * @LastEditTime : 2022-06-29 15:58:13
+ * @FilePath     : \vue3-demo\src\App.vue
+ * @description  : 
+-->
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
+  <!-- <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view> -->
   <router-view/>
 </template>
 
