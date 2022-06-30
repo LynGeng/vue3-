@@ -301,5 +301,97 @@ Suspense组件时配合异步组件使用的，它可以让异步组件放回数
 	};
 </script>
 ```
+## 21. 其他新的API
+①全新的全局API<br>
+createApp();<br>
+defineProperty();<br>
+defineAsyncComponent();<br>
+nextTick();<br>
+②将原来的全局API转移到应用对象<br>
+app.component();<br>
+app.config();<br>
+app.directive();<br>
+app.mount();<br>
+app.use();<br>
 
+## 22. v-model的本质变化
+	在表单上使用没有变化<br>
+	在组件上使用的时候，默认的属性名和事件名发生了变化<br>
+		prop，value -> modelValue<br>
+		event，input -> update:modelValue<br>
+```
+<template>
+	<Child v-model="msg"/>
+</template>
+<script lang="ts">
+	import {defineComponent, ref} from 'vue';
+	import Child from './Child';
+	export default defineComponent({
+		components:{ Child },
+		setup() {
+			const msg = ref('abc');
+			return { msg };
+		}
+	});
+</script>
+Child.vue:
+<template>
+	<h2>Child</h2>
+	<p>{{ modelValue }}</p>
+	<button @click="update">更新</button>
+</template>
+<script lang="ts">
+	import {defineComponent, ref} from 'vue';
+	export default defineComponent({
+		props: ['modelValue'],// 以前是value
+		setup(props, {emit}) {
+			// 以前是emit('input')
+			const update = () => {
+				emit('update:modelValue', props.modelValue + '....');
+			}
+			return { update };
+		}
+	});
+</script>
+可以自定义modelValue的名字：
+<Child v-model:str="msg"/>
+// 触发得改成update:str
+emit('update:str');
+可以绑定多个v-model
+<Child v-model:str="msg" v-model:name="username"/>
+.sync修饰符已移除，有v-model代替
+// vue2 中 .sync 的用法
+<Child :name.sync="username"/>
+// vue3 相当于
+<Child v-model:name="username"/>
+```
+## 23. v-if 优先级比 v-for 高
+
+## 24. 路由的操作
+```
+userRoute - 获取当前路由对象
+import {useRoute} from 'vue-router';
+setup() {
+	const route = useRoute();
+	console.log(route);
+}
+useRouter - 获取路由实例，可以进行路由跳转
+import {useRouter} from 'vue-router';
+setup() {
+	const router = useRouter();
+	console.log(router);
+	const goHome = () => {
+		router.push('/home');
+	}
+}
+```
+## 25. 状态管理Vuex
+```
+useStore - 获取vue实例
+import { useStore } from 'vuex';
+setup() {
+	const store = useStore();
+	store.dispatch('xxx');
+}
+```
 
