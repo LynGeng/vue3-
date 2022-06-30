@@ -39,6 +39,11 @@ new Proxy(obj, {
 	slots-接收父组件传入的插槽内容的对象，相当于this.$slots<br>
 	emit-用来分发自定义事件的函数，相当于this.$emit<br>
 setup里面使用emit则需要解构出来<br>
+```
+setup(props, context) {
+	const {attrs, slots, emit} = context;
+}
+```
 
 ## 8. computed需要引入
 ```
